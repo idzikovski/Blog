@@ -7,4 +7,4 @@ categories: xamarin forms bindable properties
 
 Have you ever made an attempt at creating a composite component in Xamarin Forms? If so then you probably have encountered Bindable Properties
 
-![BindableProperty](/images/bindable-properties/bindableProperty.png)
+![BindableProperty](/assets/images/bindable-properties/bindableProperty.png)
