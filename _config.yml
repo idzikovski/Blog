@@ -21,7 +21,7 @@
 title: Coding with DJ
 email: ivan.dzikovski@gmail.com
 description: >- # this means to ignore newlines until "baseurl:"
-  Welcome to my blog about app development using Xamarin and native iOS with Swift
+  Welcome to my blog about app development using Xamarin and native iOS with Swift.
   Here, I will try to cover the latest news, tips, and best practices for 
   developing native apps using these powerful technologies.
 baseurl: "/Blog" # the subpath of your site, e.g. /blog
