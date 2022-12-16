@@ -18,16 +18,19 @@
 # You can create any custom variable you would like, and they will be accessible
 # in the templates via {{ site.myvariable }}.
 
-title: Your awesome title
-email: your-email@example.com
+title: Coding with DJ
+email: ivan.dzikovski@gmail.com
 description: >- # this means to ignore newlines until "baseurl:"
-  Write an awesome description for your new site here. You can edit this
-  line in _config.yml. It will appear in your document head meta (for
-  Google search results) and in your feed.xml site description.
+  Welcome to my blog about app development using Xamarin and native iOS with Swift
+  Here, I will try to cover the latest news, tips, and best practices for 
+  developing native apps using these powerful technologies. 
+  Whether you're a seasoned developer or new to app development, 
+  you'll find valuable insights and resources to help you create high-quality, 
+  engaging apps that users will love.
 baseurl: "/Blog" # the subpath of your site, e.g. /blog
 url: "" # the base hostname & protocol for your site, e.g. http://example.com
-twitter_username: jekyllrb
-github_username:  jekyll
+twitter_username: idzikovski
+github_username:  idzikovski
 
 # Build settings
 theme: minima
