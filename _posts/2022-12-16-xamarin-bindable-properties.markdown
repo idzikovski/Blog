@@ -35,4 +35,30 @@ The contents of the [BindableProperty](https://github.com/dotnet/maui/blob/main/
 
 The key to the link between `Message` and `MessageProperty` lies in the [BindableObject](https://github.com/dotnet/maui/blob/main/src/Controls/src/Core/BindableObject.cs){:target="\_blank"} class. This class is used as a base class for all the components that are to support Data Binding. The `VisualElement` class ultimately derives from `BindableObject` which means all of the things we can see on the screen (including our component) do too.
 
-Here is where the "magic" happens and the link between `BindableProperty` and `BindableObject` are the `GetValue` and `SetValues` methods which are defined in the `BindableObject` class.
+The glue that bonds "backing field" with property here are the `GetValue` and `SetValues` methods which are defined in the `BindableObject` class. And the actual value of the property is kept in a helper class called `BindablePropertyContext` which is nested inside `BindableObject`. You can see it in the code snippet bellow taken from the actual source code. Note the **Value** property inside it. This is the actual container that keeps the value for a specific **Bindable Property**.
+
+```csharp
+...
+
+readonly Dictionary<BindableProperty, BindablePropertyContext> _properties = new Dictionary<BindableProperty, BindablePropertyContext>(4);
+
+...
+
+internal class BindablePropertyContext
+{
+    public BindableContextAttributes Attributes;
+    public BindingBase Binding;
+    public Queue<SetValueArgs> DelayedSetters;
+    public BindableProperty Property;
+    public object Value;
+
+    public bool StyleValueSet;
+    public object StyleValue;
+}
+
+...
+```
+
+An instance of this class is created for each **Bindable Property** in your component the first time the `SetValue` method is called on it, and then it is stored in a `Dictionary` field called **_properties**. Note that the type for the key specified in the declaration is `BindableProperty`. This means that the static bindable property is used as a key to look up the `BindablePropertyContext` object which is tied to a specific instance of your component. 
+
+And there you have it. That is the mystery of the **Bindable Properties** uncovered. Hope you enjoyed this read and found it insightful.
