@@ -11,7 +11,7 @@ Have you ever made an attempt at creating a composite component in .NET MAUI or 
 
 ![BindableProperties](/Blog/assets/images/BindableProperties/BindableProperties.png)
 
-If you have developing cross platform apps using .NET for a while now, you are probably familiar with the above shown, not so pretty syntax for creating **Bindable Properties.** Probably you know how to use them to create your own reusable components, but you might have wondered how the two components in the code block work together and somehow magically make our bindings work as they do.
+If you have developing cross platform apps using .NET for a while now, you are probably familiar with the code shown bellow which is used for creating **Bindable Properties.** Probably you know how to use them to create your own reusable components, but you might have wondered how the two components in the code block work together and somehow magically make our bindings work as they do.
 
 ```csharp
 public static readonly BindableProperty MessageProperty =
@@ -26,3 +26,5 @@ public string Message
     set => SetValue(MessageProperty, value);
 }
 ```
+
+If you look at it, it looks a bit like a normal C# property, where `Message` is the public facing property and `MessageProperty` is the private backing field. And that's exactly what it is!!
