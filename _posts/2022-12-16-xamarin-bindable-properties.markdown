@@ -28,3 +28,7 @@ public string Message
 ```
 
 If you look at it, it looks a bit like a normal C# property, where `Message` is the public facing property and `MessageProperty` is the private backing field. And that's exactly what it is!! `MessageProperty` is in essence a backing field even though it name suggests otherwise. But not just a regular backing field but a backing field on steroids, enhanced with the ability to support handling of things like value changes, validation, default values etc.
+
+Another confusing thing would be the fact that `MessageProperty` is static but somehow as a so called backing field it should be able to hold different values for all of the instances of our component throughout the entire app. And we will see the answer to that question in this post.
+
+The contents of the [BindableProperty](https://github.com/dotnet/maui/blob/main/src/Controls/src/Core/BindableProperty.cs) class don't reveal much about how these "backing fields" are connected to their respective properties. In fact all the `BindableProperty.Create` method does is create an `BindableProperty` instance by calling an internal constructor that in turn only sets tha passed values. 
