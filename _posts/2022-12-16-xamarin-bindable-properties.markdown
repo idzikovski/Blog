@@ -1,7 +1,7 @@
 ---
 layout: post
 title:  "Bindable Properties in .NET MAUI"
-date:   2022-12-16 14:28:17 +0100
+date:   2023-01-01 14:28:17 +0100
 categories: xamarin forms bindable properties
 ---
 
@@ -27,4 +27,4 @@ public string Message
 }
 ```
 
-If you look at it, it looks a bit like a normal C# property, where `Message` is the public facing property and `MessageProperty` is the private backing field. And that's exactly what it is!!
+If you look at it, it looks a bit like a normal C# property, where `Message` is the public facing property and `MessageProperty` is the private backing field. And that's exactly what it is!! `MessageProperty` is in essence a backing field even though it name suggests otherwise. But not just a regular backing field but a backing field on steroids, enhanced with the ability to support handling of things like value changes, validation, default values etc.
