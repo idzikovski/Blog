@@ -7,6 +7,8 @@ categories: xamarin forms bindable properties
 
 Have you ever made an attempt at creating a composite component in .NET MAUI or Xamarin Forms? If so then you probably have encountered **Bindable Properties.** I have seen many articles about how to use **Bindable Properties** to expose internal sub-components in your components to the outside world, but I haven't been able to find a good article explaining how they actually work and play an important role in the **Xamarin Forms** framework. In this post we will look at how they work in the background enabling us to practice the MVVM pattern seamlessly.
 
+![BindableProperties]("assets/BindableProperties/BindableProperties.png")
+
 ```csharp
 public static readonly BindableProperty MessageProperty =
             BindableProperty.Create(nameof(Message),
@@ -21,3 +23,4 @@ public string Message
 }
 ```
 
+If you have developing cross platform apps using .NET for a while now, you are probably familiar with the above shown, not so pretty syntax for creating **Bindable Properties.** Probably you know how to use them to create your own reusable components, but you might have wondered how the two components in the code block work together and somehow magically make our bindings work as they do.
