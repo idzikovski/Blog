@@ -18,7 +18,7 @@
 # You can create any custom variable you would like, and they will be accessible
 # in the templates via {{ site.myvariable }}.
 
-title: Coding with DJ
+title: IDJ Coding
 email: ivan.dzikovski@gmail.com
 description: >- # this means to ignore newlines until "baseurl:"
   Welcome to my blog about app development using Xamarin and native iOS with Swift.
