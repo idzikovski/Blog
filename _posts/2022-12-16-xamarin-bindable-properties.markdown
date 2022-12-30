@@ -1,7 +1,7 @@
 ---
 layout: post
 title:  "Bindable Properties in .NET MAUI"
-date:   2023-01-01 14:28:17 +0100
+date:   2022-12-29 14:28:17 +0100
 categories: xamarin forms bindable properties
 ---
 
