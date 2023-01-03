@@ -31,7 +31,7 @@ If you look at it, it looks a bit like a normal C# property, where `Message` is 
 
 Another confusing thing would be the fact that `MessageProperty` is static but somehow as a so called backing field it should be able to hold different values for all of the instances of our component throughout the entire app. And we will see how that works here.
 
-The contents of the [BindableProperty](https://github.com/dotnet/maui/blob/main/src/Controls/src/Core/BindableProperty.cs){:target="\_blank"} class don't reveal much about how these "backing fields" are connected to their respective properties. In fact all the `BindableProperty.Create` method does is create an `BindableProperty` instance by calling an internal constructor that in turn only sets tha passed values.
+The contents of the [BindableProperty](https://github.com/dotnet/maui/blob/main/src/Controls/src/Core/BindableProperty.cs){:target="\_blank"} class don't reveal much about how these "backing fields" are connected to their respective properties. In fact all the `BindableProperty.Create` method does is create an `BindableProperty` instance by calling an internal constructor that in turn only sets the passed values.
 
 The key to the link between `Message` and `MessageProperty` lies in the [BindableObject](https://github.com/dotnet/maui/blob/main/src/Controls/src/Core/BindableObject.cs){:target="\_blank"} class. This class is used as a base class for all the components that are to support Data Binding. The `VisualElement` class ultimately derives from `BindableObject` which means all of the things we can see on the screen (including our component) do too.
 
