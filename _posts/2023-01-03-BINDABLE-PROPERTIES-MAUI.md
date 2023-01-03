@@ -1,8 +1,8 @@
 ---
 layout: post
 title:  "Bindable Properties in .NET MAUI"
-date:   2022-12-16 14:28:17 +0100
-categories: xamarin forms bindable properties
+date:   2023-01-03 10:00:17 +0100
+categories: mobile app maui xamarin forms bindable properties
 ---
 
 Have you ever made an attempt at creating a composite component in .NET MAUI or Xamarin Forms? If so then you probably have encountered **Bindable Properties.** 
