@@ -59,6 +59,6 @@ internal class BindablePropertyContext
 ...
 ```
 
-An instance of this class is created for each **Bindable Property** in your component the first time the `SetValue` method is called on it, and then it is stored in a `Dictionary` field called **_properties**. Note that the type for the key specified in the declaration is `BindableProperty`. This means that the static bindable property is used as a key to look up the `BindablePropertyContext` object which is tied to a specific instance of your component. 
+An instance of this class is created for each **Bindable Property** in your component the first time the `SetValue` method is called on it, and then it is stored in a `Dictionary` field called **_properties**. Note that the type for the key specified in the declaration is `BindableProperty`. This means that the static bindable property is used as a key to look up the `BindablePropertyContext` object which is tied to a specific instance of your component.
 
 And there you have it. That is the mystery of the **Bindable Properties** uncovered. Hope you enjoyed this read and found it insightful.
