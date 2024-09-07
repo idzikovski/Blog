@@ -1,0 +1,166 @@
+---
+layout: post
+title:  ".NET MAUI: Async UI instantiation"
+date:   2024-09-09 10:00:17 +0100
+categories: mobile app maui xamarin forms UI async
+---
+
+# Improving .NET MAUI Performance: Offloading Heavy View Instantiation to a Separate Thread
+
+In any modern mobile app, performance is crucial. Users expect fast, responsive interfaces. But sometimes, views can be slow to load, leading to a degraded user experience. This issue is common when views require heavy processing during their instantiation. One such example is the `VerySlowView` in a .NET MAUI app. In this blog post, we’ll explore how to mitigate slow instantiation by loading the view in a separate thread.
+
+## The Problem: Slow View Initialization
+
+Let's take a look at `VerySlowView`, a simple `ContentView` that introduces a delay during its initialization.
+
+### Example: `VerySlowView`
+
+```csharp
+public partial class VerySlowView : ContentView
+{
+    public static readonly BindableProperty ColorProperty =
+          BindableProperty.Create(nameof(Color),
+                                  typeof(Color),
+                                  typeof(VerySlowView));
+
+    public Color Color
+    {
+        get => (Color)GetValue(ColorProperty);
+        set => SetValue(ColorProperty, value);
+    }
+
+    public VerySlowView()
+    {
+        // Simulating a delay in the view's instantiation
+        var delay = Task.Delay(1000);
+        delay.Wait();  // Synchronous delay
+        InitializeComponent();
+    }
+}
+```
+
+In this example, the `VerySlowView` introduces a 1-second delay upon initialization (`delay.Wait()`), blocking the UI thread and causing the interface to appear unresponsive. When multiple instances of `VerySlowView` are added to a page, like in `SlowUIPage`, this issue compounds.
+
+### Example: `SlowUIPage` with Multiple Slow Views
+
+```xml
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:asyncuiexample="clr-namespace:AsyncUIExample"
+             x:Class="AsyncUIExample.SlowUIPage"
+             Title="SlowUIPage">
+    <VerticalStackLayout Spacing="10" Margin="5">
+        <asyncuiexample:VerySlowView Color="#88c0e3"/>
+        <asyncuiexample:VerySlowView Color="#d2e388"/>
+        <asyncuiexample:VerySlowView Color="#e38888"/>
+    </VerticalStackLayout>
+</ContentPage>
+```
+
+In `SlowUIPage`, we use three instances of `VerySlowView`. Since the initialization is synchronous, it severely impacts performance, making the page feel sluggish to the user.
+
+## The Solution: Asynchronous View Creation
+
+A good approach to mitigate this issue is to instantiate `VerySlowView` objects on a background thread, avoiding blocking the main UI thread. Once the views are ready, they can be assigned to the page on the main thread.
+
+Here’s how we can implement this solution.
+
+### Step 1: Use Bindable Properties for Lazy Loading
+
+First, we define `BindableProperty` for each view in `SlowUIPage`. This allows us to set the views later, once they are fully initialized.
+
+### Solution: `SlowUIPage` with Asynchronous View Creation
+
+```csharp
+public partial class SlowUIPage : ContentPage
+{
+    public static readonly BindableProperty FirstViewProperty =
+          BindableProperty.Create(nameof(FirstView),
+                                  typeof(View),
+                                  typeof(SlowUIPage),
+                                  new LoadingView());
+
+    public View FirstView
+    {
+        get => (View)GetValue(FirstViewProperty);
+        set => SetValue(FirstViewProperty, value);
+    }
+
+    public static readonly BindableProperty SecondViewProperty =
+          BindableProperty.Create(nameof(SecondView),
+                                  typeof(View),
+                                  typeof(SlowUIPage),
+                                  new LoadingView());
+
+    public View SecondView
+    {
+        get => (View)GetValue(SecondViewProperty);
+        set => SetValue(SecondViewProperty, value);
+    }
+
+    public static readonly BindableProperty ThirdViewProperty =
+          BindableProperty.Create(nameof(ThirdView),
+                                  typeof(View),
+                                  typeof(SlowUIPage),
+                                  new LoadingView());
+
+    public View ThirdView
+    {
+        get => (View)GetValue(ThirdViewProperty);
+        set => SetValue(ThirdViewProperty, value);
+    }
+
+    public SlowUIPage()
+    {
+        InitializeComponent();
+    }
+
+    protected override void OnAppearing()
+    {
+        base.OnAppearing();
+        // Offload view creation to a background thread
+        Task.Run(CreateViews);
+    }
+
+    private void CreateViews()
+    {
+        // Initialize views on a background thread
+        var firstView = new VerySlowView { Color = Color.FromArgb("#88c0e3") };
+        var secondView = new VerySlowView { Color = Color.FromArgb("#d2e388") };
+        var thirdView = new VerySlowView { Color = Color.FromArgb("#e38888") };
+
+        // Assign views to the bindable properties on the main thread
+        MainThread.BeginInvokeOnMainThread(() =>
+        {
+            FirstView = firstView;
+            SecondView = secondView;
+            ThirdView = thirdView;
+        });
+    }
+}
+```
+
+### Step 2: Offloading View Creation
+
+The key here is the `Task.Run(CreateViews)` method, which executes the view instantiation in the background. By offloading this work, we keep the UI thread responsive.
+
+### Step 3: Updating the UI on the Main Thread
+
+Once the views are created in the background, they need to be assigned to the page's UI elements. Since only the main thread can update the UI, we use `MainThread.BeginInvokeOnMainThread()` to perform the assignment.
+
+### Bonus: `LoadingView` as a Placeholder
+
+The `LoadingView` serves as a placeholder until the `VerySlowView` instances are ready. You can design `LoadingView` to show a spinner or a message to the user, improving the overall experience.
+
+## The Benefits
+
+- **Responsiveness**: The UI remains responsive while the views are being initialized.
+- **User Experience**: Users see a loading indicator or placeholder instead of a frozen interface.
+- **Scalability**: This approach can be extended to handle any slow-loading views or components in the app.
+
+## Conclusion
+
+When dealing with slow view initialization in .NET MAUI, offloading heavy operations to a background thread can significantly improve the user experience. By using bindable properties and updating the UI on the main thread, we can create responsive and smooth interfaces even when working with complex or time-consuming views.
+
+This approach ensures that the app remains responsive, providing a better experience for your users while maintaining the flexibility to handle more intensive tasks behind the scenes.
