@@ -1,13 +1,13 @@
 ---
 layout: post
 title:  ".NET MAUI: Async UI instantiation"
-date:   2024-09-09 10:00:17 +0100
+date:   2024-09-06 10:00:17 +0100
 categories: mobile app maui xamarin forms UI async
 ---
 
-# Improving .NET MAUI Performance: Offloading Heavy View Instantiation to a Separate Thread
+Yes, you read it right, async UI. After years of developing mobile apps, I am fully aware that mixing those two words is a big no no, but bear with me. Recently I found myself in a situation where after migrating a Xamarin.Forms application to .NET MAUI, a page which was made of multiple complex views, was taking a significantly long time to load (see image below). After a bit of testing I was sure that `InitializeComponent` (the parsing of the xaml) was the bottleneck. To address this, I decided to experiment with asynchronous loading for the UI components and I will share my findings with you now.
 
-In any modern mobile app, performance is crucial. Users expect fast, responsive interfaces. But sometimes, views can be slow to load, leading to a degraded user experience. This issue is common when views require heavy processing during their instantiation. One such example is the `VerySlowView` in a .NET MAUI app. In this blog post, we’ll explore how to mitigate slow instantiation by loading the view in a separate thread.
+Before we continue, let's note for the record, that I would strongly advise you to always try to optimize your views by flattening out the hierarchy and reducing the number of nested views where possible, and by reducing the amount of work that is done during the instantiation of your views. However, if you find yourself in a situation where you cannot avoid complex views, or lacking the resources to optimize the views, this little trick might help you out. So let's dive in.
 
 ## The Problem: Slow View Initialization
 
@@ -39,7 +39,7 @@ public partial class VerySlowView : ContentView
 }
 ```
 
-In this example, the `VerySlowView` introduces a 1-second delay upon initialization (`delay.Wait()`), blocking the UI thread and causing the interface to appear unresponsive. When multiple instances of `VerySlowView` are added to a page, like in `SlowUIPage`, this issue compounds.
+In this example, the `VerySlowView` introduces a 1-second delay upon initialization (`Task.Delay(1000)`), blocking the UI thread and causing the interface to appear unresponsive. When multiple instances of `VerySlowView` are added to a page, like in `SlowUIPage`, this issue compounds.
 
 ### Example: `SlowUIPage` with Multiple Slow Views
 
@@ -59,6 +59,12 @@ In this example, the `VerySlowView` introduces a 1-second delay upon initializat
 ```
 
 In `SlowUIPage`, we use three instances of `VerySlowView`. Since the initialization is synchronous, it severely impacts performance, making the page feel sluggish to the user.
+
+<br>
+<p align="center">
+    <img src="/Blog/assets/images/AsyncUI/before.gif" height="500"/>
+</p>
+<br>
 
 ## The Solution: Asynchronous View Creation
 
@@ -153,14 +159,17 @@ Once the views are created in the background, they need to be assigned to the pa
 
 The `LoadingView` serves as a placeholder until the `VerySlowView` instances are ready. You can design `LoadingView` to show a spinner or a message to the user, improving the overall experience.
 
+<br>
+<p align="center">
+    <img src="/Blog/assets/images/AsyncUI/after.gif" height="500"/>
+</p>
+<br>
+
 ## The Benefits
 
 - **Responsiveness**: The UI remains responsive while the views are being initialized.
 - **User Experience**: Users see a loading indicator or placeholder instead of a frozen interface.
-- **Scalability**: This approach can be extended to handle any slow-loading views or components in the app.
 
 ## Conclusion
 
-When dealing with slow view initialization in .NET MAUI, offloading heavy operations to a background thread can significantly improve the user experience. By using bindable properties and updating the UI on the main thread, we can create responsive and smooth interfaces even when working with complex or time-consuming views.
-
-This approach ensures that the app remains responsive, providing a better experience for your users while maintaining the flexibility to handle more intensive tasks behind the scenes.
+UI optimization is very important when developing mobile applications, but when not possible, offloading heavy operations to a background thread can significantly improve the user experience. By using bindable properties and updating the UI on the main thread, we can create responsive and smooth interfaces even when working with complex or time-consuming views.
