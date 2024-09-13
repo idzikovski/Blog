@@ -1,7 +1,7 @@
 ---
 layout: post
 title:  ".NET MAUI: Async UI instantiation"
-date:   2024-09-06 10:00:17 +0100
+date:   2024-09-14 10:00:17 +0100
 categories: mobile app maui xamarin forms UI async
 ---
 
@@ -173,3 +173,5 @@ The `LoadingView` serves as a placeholder until the `VerySlowView` instances are
 ## Conclusion
 
 UI optimization is very important when developing mobile applications, but when not possible, offloading heavy operations to a background thread can significantly improve the user experience. By using bindable properties and updating the UI on the main thread, we can create responsive and smooth interfaces even when working with complex or time-consuming views.
+
+You can find the example code [here.](https://github.com/ProblemSolvingStories/AsyncUIExample)
