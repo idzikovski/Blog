@@ -14,9 +14,11 @@ layout: default
   <h3>Submit your proposal</h3>
   <form id="contactForm" method="post"
     action="https://mentoringformapi20240826221759.azurewebsites.net/mentoring-proposal">
-    <input type="text" id="name" name="name" placeholder="Your Name" style="width: 20em;" required><br>
-    <input type="email" id="email" name="email" placeholder="Your Email" style="width: 20em;" required><br>
-    <textarea id="proposal" name="proposal" placeholder="Your Proposal" rows="10" cols="50" required></textarea><br>
+    <input type="text" id="name" name="name" placeholder="Your Name" style="width: 30em;" required><br>
+    <input type="email" id="email" name="email" placeholder="Your Email" style="width: 30em;" required><br>
+    <textarea id="proposal" name="proposal" placeholder="Your Proposal" rows="10" cols="80" required></textarea><br>
+    <input type="checkbox" id="subscribe" name="subscribe" >
+    <label for="option2">I would like to get notified when there is a new blog post.</label>
     <button type="submit">Submit</button>
   </form>
 

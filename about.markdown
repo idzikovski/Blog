@@ -1,11 +1,8 @@
 ---
 layout: about
-title: About
+title: Sign up for a mentorship session
 permalink: /about/
 ---
+Do you have a concrete problem related to software development and deployment, or you are looking for advice on how to grow your career in software engineering, or you just want my opinion on a certain software related topic? If the answer is yes to any of these questions, I would love to hear from you!
 
-Hi there! My name is **I**van **DJ**ikovski and I am a software developer with over 5 years of experience working with Xamarin and the .NET stack.
-
-I have a passion for problem-solving and enjoy using my skills and knowledge to develop efficient and effective solutions for my clients. In my current role, I have had the opportunity to work on a variety of projects, ranging from small business applications to large enterprise systems. I am always looking for ways to improve my skills and stay up-to-date with the latest technologies and industry trends.
-
-Thank you for taking the time to read about me, and if you have any app development related issues or questions feel free to [contact me.](mailto:ivan.dzikovski@gmail.com)
+I am making my seven year experience in software development available to you through one hour mentorship sessions, so don't hesitate and reach out to me via the form below and let’s schedule a session to discuss your needs. I look forward to hearing from you.

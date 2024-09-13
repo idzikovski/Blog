@@ -21,12 +21,12 @@
 title: Problem Solving Stories
 email: ivan.dzikovski@gmail.com
 description1: >- # this means to ignore newlines until "baseurl:"
-  Throughout my software engineering career, I have been passionate about solving problems.
-  These are the stories that I found worth sharing and I think will be of values to others.
+  I am passionate about software engineering and solving problems. I enjoy sharing my experience gained over
+  the years and so these are the stories that I found worth sharing and I think will be of values to others.
   
 description2:  >-
-  You can find the link to my YouTube channel bellow, where I post video content related to solving problems.
-  I also offer free mentorship session which you can sign up for using the link below. 
+  Feel free to check out my YouTube where I post software engineering related content.
+  Last but not least, I also offer free mentorship session which you can sign up for using the link below. 
 
 baseurl: "/Blog" # the subpath of your site, e.g. /blog
 url: "" # the base hostname & protocol for your site, e.g. http://example.com
