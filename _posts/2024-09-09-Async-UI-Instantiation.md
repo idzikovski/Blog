@@ -1,7 +1,7 @@
 ---
 layout: post
 title:  ".NET MAUI: Async UI instantiation"
-date:   2024-09-14 10:00:17 +0100
+date:   2024-09-14 00:00:17 +0100
 categories: mobile app maui xamarin forms UI async
 ---
 
